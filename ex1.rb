@@ -11,10 +11,27 @@ room_info = { data: { rooms:
 }
 
 rm201_capacity = 0
+
 room_info[:data][:rooms].each do |room|
   if room[:room_number] == "201"
     rm201_capacity = room[:capacity]
   end
 end
 
-p rm201_capacity
+rm201_id = 0
+
+room_info[:data][:rooms].each do |room|
+  if room[:room_number] == "201"
+    rm201_id = room[:id]
+  end
+end
+
+room_info[:data][:events].each do |event|
+  if event[:room_id] == rm201_id
+    if event[:attendees] <= rm201_capacity
+      puts "Room 201 is big enough to host the #{event[:attendees]}-person event with id:#{event[:id]}"
+    else
+      puts "Room 201 cannot hold #{event[:attendees]} people expected at event with id:#{event[:id]}"
+    end
+  end
+end
